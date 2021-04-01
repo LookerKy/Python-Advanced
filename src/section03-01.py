@@ -101,8 +101,6 @@ print('Ex5-4 -', x, y, reset)
 x, y, *reset = 1, 2, 3, 4, 5
 print('Ex5-4 -', x, y, reset)
 
-
-
 print(type(reset))
 
 # Mutable vs Immutable
@@ -112,8 +110,8 @@ l = [10, 20, 30]
 print('Ex6-1', l, t, id(l), id(t))
 
 # list tuple 깊은 복사
-t = t*2
-l = l*2
+t = t * 2
+l = l * 2
 print('Ex6-2', l, t, id(l), id(t))
 
 # list 얕은 복사(주소값 동일), tuple 깊은복사
@@ -122,5 +120,35 @@ l *= 2
 
 print('Ex6-3', l, t, id(l), id(t))
 
+print()
+print()
 
+# sort vs sorted
+# reverse, key=len, key=str.lower, key=func
+
+f_list = ['orange', 'apple', 'mango', 'papaya', 'lemon', 'strawberry', 'coconut']
+
+# sorted : 정렬 후 '새로운' 객체 반환
+
+print('Ex7-1', sorted(f_list))
+print('Ex7-2', sorted(f_list, reverse=True))
+print('Ex7-3', sorted(f_list, key=len))
+print('Ex7-4', sorted(f_list, key=lambda x: x[-1]))  # 끝 글자를 기준으로 정렬
+print('Ex7-5', sorted(f_list, key=lambda x: x[-1], reverse=True))
+print('Ex7-6', f_list)
+
+print()
+
+# sort: 정렬 후 객체 직접 변경
+# 반환값을 다른 변수에 대입했는데 None이 나온 경우에는 객체 자체에 변환이 이루어졌다고 보면됨
+
+a = f_list.sort()
+
+print(a, f_list)
+
+print('Ex7-7 ', f_list.sort(), f_list)
+print('Ex7-7 ', f_list.sort(reverse=True), f_list)
+print('Ex7-7 ', f_list.sort(key=len), f_list)
+print('Ex7-7 ', f_list.sort(key=lambda li: li[-1]), f_list)
+print('Ex7-7 ', f_list.sort(key=lambda li: li[-1], reverse=True), f_list)
 
