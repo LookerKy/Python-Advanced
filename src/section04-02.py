@@ -134,3 +134,67 @@ print(avg_closure2(20))
 print(avg_closure2(30))
 
 # 데코레이터 실습
+# 1. 중복 제거, 코드 간결
+# 2. 클로저 보다 문법 간결
+# 3. 조합해서 사용 용이
+
+# 단점
+# 디버깅이 어려움
+# 에러의 모호함
+import time
+
+
+def perf_time(func):
+    def pref_clocked(*args):
+        st = time.perf_counter()
+        result = func(*args)
+        et = time.perf_counter() - st
+        name = func.__name__
+        arg_str = ','.join(repr(arg) for arg in args)
+        print('[%0.5fs] %s(%s) -> %r ' % (et, name, arg_str, result))
+        return result
+
+    return pref_clocked
+
+
+@perf_time
+def time_func(second):
+    time.sleep(second)
+
+
+@perf_time
+def sum_func(*numbers):
+    return sum(numbers)
+
+
+@perf_time
+def fact_func(n):
+    return 1 if n < 2 else n * fact_func(n - 1)
+
+
+# 데코레이터 미사용
+non_deco1 = perf_time(time_func)
+non_deco2 = perf_time(sum_func)
+non_deco3 = perf_time(fact_func)
+
+print(non_deco1, non_deco1.__code__.co_freevars)
+print(non_deco2, non_deco2.__code__.co_freevars)
+print(non_deco3, non_deco3.__code__.co_freevars)
+
+print('*' * 40, 'Called Non Deco -> time_func')
+print()
+print()
+print()
+non_deco1(2)
+non_deco2(100, 200, 300, 500)
+non_deco3(100)
+print()
+print()
+print()
+print()
+
+print('*' * 40, 'Called Deco -> func')
+
+time_func(2)
+sum_func(100, 200, 300, 400, 500)
+# fact_func(100)
